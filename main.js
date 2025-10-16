@@ -5,13 +5,13 @@ const path = require('node:path')
 function createWindow() {
     let screenHeight = screen.getPrimaryDisplay().workAreaSize.height;
     let ratio = 1512 / 982;
-    let initialHeight = Math.ceil(screenHeight * 0.8); // 初始高度为屏幕高度的80%
+    let initialHeight = Math.ceil(screenHeight * 0.9); // 初始高度为屏幕高度的80%
     let initialWidth = Math.ceil(initialHeight * ratio); // 根据宽高比计算宽度
 
     mainWindow = new BrowserWindow({
         show: true,
         title: "Creatiosoft Poker",
-        fullscreen: false,
+        fullscreenable: true,
         resizable: true,
         width: initialWidth,
         height: initialHeight,

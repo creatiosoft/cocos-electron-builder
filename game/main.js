@@ -21,6 +21,13 @@ window.boot = function () {
 
         cc.director.once(cc.Director.EVENT_AFTER_SCENE_LAUNCH, function () {
             splash.style.display = 'none';
+
+            if (cc.sys.isMobile && window.screenfull.isEnabled) {
+                window.screenfull.on('change', () => {
+                    onResize();
+                });
+            }
+            onResize();
         });
     }
 
@@ -35,21 +42,23 @@ window.boot = function () {
 
         if (cc.sys.isMobile) {
             if (settings.orientation === 'landscape') {
-                cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
+                cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT);
             }
             else if (settings.orientation === 'portrait') {
                 cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT);
             }
-            cc.view.enableAutoFullScreen([
-                cc.sys.BROWSER_TYPE_BAIDU,
-                cc.sys.BROWSER_TYPE_BAIDU_APP,
-                cc.sys.BROWSER_TYPE_WECHAT,
-                cc.sys.BROWSER_TYPE_MOBILE_QQ,
-                cc.sys.BROWSER_TYPE_MIUI,
-                cc.sys.BROWSER_TYPE_HUAWEI,
-                cc.sys.BROWSER_TYPE_UC,
-            ].indexOf(cc.sys.browserType) < 0);
+            // cc.view.enableAutoFullScreen([
+            //     cc.sys.BROWSER_TYPE_BAIDU,
+            //     cc.sys.BROWSER_TYPE_BAIDU_APP,
+            //     cc.sys.BROWSER_TYPE_WECHAT,
+            //     cc.sys.BROWSER_TYPE_MOBILE_QQ,
+            //     cc.sys.BROWSER_TYPE_MIUI,
+            //     cc.sys.BROWSER_TYPE_HUAWEI,
+            //     cc.sys.BROWSER_TYPE_UC,
+            // ].indexOf(cc.sys.browserType) < 0);
         }
+
+        cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT);
 
         // Limit downloading max concurrent task to 2,
         // more tasks simultaneously may cause performance draw back on some android system / browsers.
@@ -141,4 +150,82 @@ if (window.jsb) {
 
     cc.macro.CLEANUP_IMAGE_CACHE = true;
     window.boot();
+}
+
+
+
+function onResize() {
+    /**IOS RELATED */
+    // if (cc.sys.os == cc.sys.OS_IOS) {
+    //     if (window.innerHeight >= document.documentElement.clientHeight) {
+    //         document.getElementById("swipeup").style.visibility = "hidden";
+    //         window.scrollTo(0, 0);
+    //         cc.director.resume();
+    //         // document.body.style.height = '100%';
+    //     } else {
+    //         //  document.body.style.height=150%;
+    //         document.getElementById("swipeup").style.visibility = "visible";
+    //         cc.director.pause();
+    //         //  document.body.style.height = '101%';
+    //         //  document.body.style.top = '1%';
+    //         window.scrollTo(0, document.body.style.height);
+    //         //  document.getElementById("GameCanvas").style.visibility = "visible";
+    //     }
+    // }
+    // if (cc.sys.isMobile) {
+        // var w = window.innerWidth;
+        // var h = window.innerHeight;
+        // var ratio = w / h;
+        // if (ratio < 1.33) {
+        //     document.getElementById("noportrait").style.visibility = "hidden";
+        //     //  document.getElementById("GameCanvas").style.visibility = "hidden";
+
+        // } else {
+        //     document.getElementById("noportrait").style.visibility = "visible";
+        //     //  document.getElementById("GameCanvas").style.visibility = "visible";
+        // }
+    // }
+    /** */
+    // var defaultHeight, defaultWidth;
+    // defaultWidth = 864;
+    // defaultHeight = 486;
+
+    // var w = window.outerWidth;
+    // var h = window.outerHeight;
+
+    // // console.log("RESIZE IS ", w, h)
+
+    // if (w < defaultWidth) {
+    //     w = defaultWidth;
+    //     h = defaultHeight;
+    //     resizeWin(w, h);
+    //     return;
+    // }
+    // if (h < defaultHeight) {
+    //     h = defaultHeight;
+    //     w = defaultWidth;
+    //     resizeWin(w, h);
+    //     return;
+    // }
+
+    // var ratio = w / h;
+    // // console.log("RESIZE IS ", w, h, ratio)
+    // if (ratio > 1.74 && ratio < 1.80) { // ratio lies between 16:9 to 4:3
+    // if (cc.sys.os === cc.sys.OS_IOS) {
+    // }
+    // else if (cc.sys.isMobile && window.screenfull.isEnabled) {
+    //     if (window.screenfull.isFullscreen) {
+    //         document.getElementById("swipeup").style.visibility = "hidden";
+    //         cc.director.resume();
+    //     } else {
+    //         document.getElementById("swipeup").style.visibility = "visible";
+    //         document.getElementById('swipeup').addEventListener('click', () => {
+    //             if (window.screenfull.isEnabled) {
+    //                 window.screenfull.request();
+    //             }
+    //         });
+    //         cc.director.pause();
+    //         window.scrollTo(0, document.body.style.height);
+    //     }
+    // }
 }
